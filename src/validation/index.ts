@@ -1,11 +1,11 @@
 //// productObj === errorObj (Tittle, Description, Price, ImageUrl)
 
-export const productValidation = (product : {title: string; description: string ;imageURL: string; price: string  }) => {
+export const productValidation = (product : {title: string; description: string ;imageURL: string; price: string ,}) => {
   const errors : {title: string; description: string; imageURL: string; price: string } = {
     title: "",
     description: "",
     imageURL: "",
-    price: ""
+    price: "",
   } 
    const validUrl = /^(ftp|http|https):\/\/[^ "]+$/.test(product.imageURL)
 

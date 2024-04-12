@@ -1,5 +1,5 @@
 interface IProps {
-message: string;
+message: string|string[];
 }
 
 const ErrorMessage = ({message} : IProps) => {
