@@ -75,6 +75,7 @@ const App = () => {
       [name]: ''
     })
   };
+
   const onCancel = () => {
     closeModal();
     setProduct(defaultProductObj);
@@ -87,7 +88,7 @@ const App = () => {
         imageURL: "",
         
       });
-    }, 2);
+    }, 0);
   };
   
   const removeProductHandler = () => {
@@ -125,7 +126,7 @@ const App = () => {
   setProduct(defaultProductObj)
   setTempColors([])
   closeModal()
-  toast("Product has been added successfully!", {
+  toast.success("Product has been added successfully!", {
     icon: "👏",
     style: {
       backgroundColor: "black",
@@ -157,14 +158,6 @@ const App = () => {
     setProductToEdit(defaultProductObj)
     setTempColors([])
     closeEditModal() 
-    
-    toast("Product has been updated successfully!", {
-      icon: "👏",
-      style: {
-        backgroundColor: "black",
-        color: "white",
-      },
-    });
     }
 
 
