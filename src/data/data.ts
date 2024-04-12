@@ -183,7 +183,7 @@ export const formInput : IFormInput[] =[
     label: "Product Price",
     type: "text",
   },
- 
+
  ]
  
 export const colors: string[] = [

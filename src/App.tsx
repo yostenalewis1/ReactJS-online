@@ -11,6 +11,9 @@ import CircleColor from "./components/CircleColor"
 import { v4 as uuid } from "uuid";
 import { Select } from "./components/Select"
 import { ProductNameTypes } from "./types"
+import toast, { Toaster }  from "react-hot-toast"
+ 
+
 
 const App = () => {
   const defaultProductObj = {
@@ -35,14 +38,18 @@ const App = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isOpenEditModal, setIsOpenEditModal] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState(categories[0])
+  const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
 
 
   /* -----------Handler-----------------*/
   const closeModal = () =>  setIsOpen(false)
   const openModal =()=> setIsOpen(true) 
-  
   const closeEditModal = () =>  setIsOpenEditModal(false)
   const openEditModal =()=> setIsOpenEditModal(true)
+  const openConfirmModal = () => setIsOpenConfirmModal(true)
+  const closeConfirmModal = () => setIsOpenConfirmModal(false)
+
+
 
   const onChangeHandler= (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name,value} = e.target
@@ -83,6 +90,20 @@ const App = () => {
     }, 2);
   };
   
+  const removeProductHandler = () => {
+   const filteredProduct = products.filter((product)=> product.id !== productToEdit.id)
+    setProducts(filteredProduct)
+    closeConfirmModal()
+    
+    toast("Product has been removed successfully!", {
+      icon: "👏",
+      style: {
+        backgroundColor: "black",
+        color: "white",
+      },
+    });
+  }
+
 
  const submitHandler = (event: FormEvent<HTMLFormElement>): void =>{
   event.preventDefault()
@@ -104,6 +125,13 @@ const App = () => {
   setProduct(defaultProductObj)
   setTempColors([])
   closeModal()
+  toast("Product has been added successfully!", {
+    icon: "👏",
+    style: {
+      backgroundColor: "black",
+      color: "white",
+    },
+  });
   }
 
 
@@ -128,7 +156,15 @@ const App = () => {
     setProducts(updatedProducts)
     setProductToEdit(defaultProductObj)
     setTempColors([])
-    closeEditModal()
+    closeEditModal() 
+    
+    toast("Product has been updated successfully!", {
+      icon: "👏",
+      style: {
+        backgroundColor: "black",
+        color: "white",
+      },
+    });
     }
 
 
@@ -141,7 +177,10 @@ const App = () => {
      setProductToEdit={setProductToEdit} 
      openEditModal={openEditModal}
      idx={idx} 
-     setProductToEditIdx={setProductToEditIdx}/>
+     setProductToEditIdx={setProductToEditIdx}
+     openConfirmModal= {openConfirmModal}
+     />
+     
     )
  
  )
@@ -183,8 +222,13 @@ const renderProductColors = colors.map((color)=>(
   return (
     <main className="container" > 
 
-       <Button className="block bg-indigo-600 hover:bg-indigo-800 mx-auto my-10 px-10 font-medium  " onClick={openModal}>Build product</Button>
-       <div className="m-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 p-2 rounded-md ">
+     <Button
+        className="block bg-indigo-700 hover:bg-indigo-800 mx-auto my-10 px-10 p-2 font-medium"
+        onClick={openModal}
+        width="w-fit"
+      >
+        Build a Product
+      </Button>    <div className="m-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 p-2 rounded-md ">
        {renderProductList }
        </div>
         
@@ -242,6 +286,24 @@ const renderProductColors = colors.map((color)=>(
      </form>
     </Modal>
 
+   {/***************  Delete product modal ************/}
+    <Modal
+        isOpen={isOpenConfirmModal}
+        closeModal={closeConfirmModal}
+        title="Are you sure you want to remove this Product from your Store?"
+        description="Deleting this product will remove it permanently from your inventory. Any associated data, sales history, and other related information will also be deleted. Please make sure this is the intended action."
+      >
+        <div className="flex items-center space-x-3">
+          <Button className="bg-[#c2344d] hover:bg-red-800 " onClick={removeProductHandler}>
+            Yes, remove
+          </Button>
+          <Button type="button" className="bg-[#f5f5fa] hover:bg-gray-300 !text-black " onClick={closeConfirmModal}>
+            Cancel
+          </Button>
+        </div>
+      </Modal>
+
+   <Toaster />
      </main>
   )
 }

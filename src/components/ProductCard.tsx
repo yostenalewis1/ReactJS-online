@@ -10,10 +10,10 @@ setProductToEdit: (product: IProduct) => void
 openEditModal: () => void
 idx : number
 setProductToEditIdx :(value : number) => void 
- 
+openConfirmModal :()=> void 
 }
 
-const ProductCard = ({product,idx,setProductToEdit,openEditModal,setProductToEditIdx} : IProps) => {
+const ProductCard = ({product,idx,setProductToEdit,openEditModal,setProductToEditIdx,openConfirmModal} : IProps) => {
     const {title,description,imageURL,price,colors,category} = product;
     
     /*** renderrrr ****/
@@ -28,15 +28,16 @@ const ProductCard = ({product,idx,setProductToEdit,openEditModal,setProductToEdi
      setProductToEditIdx(idx)
     }
 
-    const onDelete = () => {
-      console.log()
+    const onRemove = () => {
+      setProductToEdit(product)
+      openConfirmModal()
     }
 
      return (
         <div className="max-w-sm md:max-w-lg mx-auto md:mx-0 border  rounded-md p-2 flex flex-col  ">
              <Image imageurl={imageURL} alt={"Product Name"} className="rounded-md"  />
 
-          <h3 className="text-lg font-semibold">{title}</h3>
+          <h3 className="text-lg font-semibold">{textslice(title,25)}</h3>
           <p className="text-sm text-gray-500 break-words">{textslice(description)}</p>    
 
           <div className="flex items-center my-3 space-x-1 ">
@@ -59,10 +60,12 @@ const ProductCard = ({product,idx,setProductToEdit,openEditModal,setProductToEdi
          <div className="flex items-center justify-between space-x-2 mt-3">
             <Button className="bg-indigo-700 hover:bg-indigo-800  " width="w-full" onClick={onEdit}
              >EDIT</Button>
-            <Button className="bg-red-600 hover:bg-red-800 " onClick={onDelete} >DELETE</Button>
+            <Button className="bg-red-600 hover:bg-red-800 " onClick={onRemove} >Remove</Button>
          </div>
         </div>         
   )
     }
 
     export default ProductCard; 
+
+ 
