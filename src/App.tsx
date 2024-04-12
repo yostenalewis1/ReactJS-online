@@ -76,9 +76,9 @@ const App = () => {
     })
   };
 
-  const onCancel = () => {
-    closeModal();
+  const onCancel = () => { 
     setProduct(defaultProductObj);
+    closeModal();
     setTempColors([]);
     setTimeout(() => {
       setErrors({
